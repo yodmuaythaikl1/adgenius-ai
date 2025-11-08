@@ -1,0 +1,3 @@
+"""
+AdGenius AI - API Module
+"""

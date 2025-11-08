@@ -1,0 +1,66 @@
+{
+  "name": "AdGenius AI",
+  "description": "AI-Powered Advertising Platform for Multi-Channel Campaigns",
+  "repository": "https://github.com/yourusername/adgenius-ai",
+  "logo": "https://avatars.githubusercontent.com/u/yourusername",
+  "keywords": ["python", "flask", "ai", "advertising", "marketing", "mongodb"],
+  "env": {
+    "SECRET_KEY": {
+      "description": "Secret key for Flask application",
+      "generator": "secret"
+    },
+    "JWT_SECRET_KEY": {
+      "description": "Secret key for JWT token generation",
+      "generator": "secret"
+    },
+    "FLASK_ENV": {
+      "description": "Flask environment",
+      "value": "production"
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API key for AI features",
+      "required": false
+    },
+    "FACEBOOK_APP_ID": {
+      "description": "Facebook App ID for Facebook/Instagram integration",
+      "required": false
+    },
+    "FACEBOOK_APP_SECRET": {
+      "description": "Facebook App Secret",
+      "required": false
+    },
+    "TIKTOK_APP_ID": {
+      "description": "TikTok App ID",
+      "required": false
+    },
+    "TIKTOK_APP_SECRET": {
+      "description": "TikTok App Secret",
+      "required": false
+    },
+    "SHOPEE_PARTNER_ID": {
+      "description": "Shopee Partner ID",
+      "required": false
+    },
+    "SHOPEE_PARTNER_KEY": {
+      "description": "Shopee Partner Key",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "mongolab:sandbox",
+      "as": "MONGODB"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
