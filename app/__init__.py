@@ -5,7 +5,6 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from flask_swagger_ui import get_swaggerui_blueprint
 
 from app.config import config_by_name
 from app.utils.logger import setup_logger
@@ -39,18 +38,6 @@ def create_app(config_name="development"):
     
     # Register API routes
     register_routes(app)
-    
-    # Setup Swagger UI
-    SWAGGER_URL = '/api/docs'
-    API_URL = '/static/swagger.json'
-    swaggerui_blueprint = get_swaggerui_blueprint(
-        SWAGGER_URL,
-        API_URL,
-        config={
-            'app_name': "AdGenius AI API"
-        }
-    )
-    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
     
     # Register error handlers
     register_error_handlers(app)
