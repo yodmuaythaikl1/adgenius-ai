@@ -4,39 +4,17 @@ Flask-RESTful==0.3.10
 Flask-Cors==4.0.0
 Flask-JWT-Extended==4.5.3
 Flask-Bcrypt==1.0.1
-Flask-MongoEngine==1.0.0
+gunicorn==21.2.0
 
 # Database
-pymongo==4.3.3
-mongoengine==0.24.2
+pymongo==4.6.0
+mongoengine==0.27.0
 
-# AI และ Machine Learning (lightweight version)
-scikit-learn==1.3.2
-pandas==2.0.3
+# AI และ Machine Learning (minimal)
 numpy==1.24.4
-openai==1.3.0
-
-# API Clients สำหรับแพลตฟอร์มต่างๆ (optional - install when needed)
-# facebook-business==17.0.0
-# Uncomment when you have API keys
+openai==1.3.7
 
 # Utilities
 python-dotenv==1.0.0
-requests==2.28.2
-pyjwt==2.6.0
-gunicorn==20.1.0
-celery==5.2.7
-redis==4.5.1
-
-# Testing
-pytest==7.2.2
-pytest-flask==1.2.0
-pytest-cov==4.0.0
-
-# Logging
-loguru==0.6.0
-
-# Development
-black==23.1.0
-flake8==6.0.0
-isort==5.12.0
+requests==2.31.0
+pyjwt==2.8.0
