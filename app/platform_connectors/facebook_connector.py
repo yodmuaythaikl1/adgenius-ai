@@ -7,15 +7,20 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union
 
-from facebook_business.api import FacebookAdsApi
-from facebook_business.adobjects.adaccount import AdAccount
-from facebook_business.adobjects.campaign import Campaign as FBCampaign
-from facebook_business.adobjects.adset import AdSet
-from facebook_business.adobjects.ad import Ad
-from facebook_business.adobjects.adcreative import AdCreative
-from facebook_business.adobjects.targetingsearch import TargetingSearch
-from facebook_business.adobjects.targeting import Targeting
-from facebook_business.exceptions import FacebookRequestError
+try:
+    from facebook_business.api import FacebookAdsApi
+    from facebook_business.adobjects.adaccount import AdAccount
+    from facebook_business.adobjects.campaign import Campaign as FBCampaign
+    from facebook_business.adobjects.adset import AdSet
+    from facebook_business.adobjects.ad import Ad
+    from facebook_business.adobjects.adcreative import AdCreative
+    from facebook_business.adobjects.targetingsearch import TargetingSearch
+    from facebook_business.adobjects.targeting import Targeting
+    from facebook_business.exceptions import FacebookRequestError
+    HAS_FACEBOOK_SDK = True
+except ImportError:
+    HAS_FACEBOOK_SDK = False
+    FacebookRequestError = Exception  # Fallback
 
 from app.models.campaign import Campaign
 from app.utils.helpers import generate_id
