@@ -4,10 +4,21 @@
 
 import os
 import json
-import numpy as np
-import pandas as pd
 from typing import Dict, List, Any, Tuple
 from datetime import datetime
+
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+    
+try:
+    import pandas as pd
+    HAS_PANDAS = True
+except ImportError:
+    HAS_PANDAS = False
+
 from app.utils.logger import get_logger
 
 # ตั้งค่า logger

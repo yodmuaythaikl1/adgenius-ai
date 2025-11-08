@@ -6,12 +6,27 @@ import json
 import logging
 import time
 from typing import Dict, List, Optional, Union
-import numpy as np
 from datetime import datetime, timedelta
 
-import openai
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+# Lazy imports - only import when needed
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
+try:
+    import openai
+    HAS_OPENAI = True
+except ImportError:
+    HAS_OPENAI = False
+
+try:
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
 
 from app.utils.helpers import generate_id
 from app.platform_connectors.facebook_connector import FacebookConnector

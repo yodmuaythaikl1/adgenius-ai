@@ -12,6 +12,7 @@ gunicorn==21.2.0
 
 # Database
 pymongo==4.6.0
+mongoengine==0.27.0
 
 # Utilities
 python-dotenv==1.0.0

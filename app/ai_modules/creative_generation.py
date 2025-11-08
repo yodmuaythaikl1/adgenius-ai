@@ -10,7 +10,11 @@ import requests
 from typing import Dict, List, Optional, Union
 from datetime import datetime
 
-import openai
+try:
+    import openai
+    HAS_OPENAI = True
+except ImportError:
+    HAS_OPENAI = False
 
 from app.utils.helpers import generate_id
 

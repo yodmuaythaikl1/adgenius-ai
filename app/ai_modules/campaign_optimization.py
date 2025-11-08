@@ -5,13 +5,27 @@ import os
 import json
 import logging
 import time
-import numpy as np
 from typing import Dict, List, Optional, Union
 from datetime import datetime, timedelta
 
-import openai
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
+try:
+    import openai
+    HAS_OPENAI = True
+except ImportError:
+    HAS_OPENAI = False
+    
+try:
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
 
 from app.utils.helpers import generate_id
 from app.platform_connectors.facebook_connector import FacebookConnector
