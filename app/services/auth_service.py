@@ -2,16 +2,21 @@
 AdGenius AI Backend - Authentication Service
 """
 import uuid
+import hashlib
 from datetime import datetime
 from typing import Dict, List, Optional, Union
 
-from flask_bcrypt import Bcrypt
 from mongoengine.errors import NotUniqueError
 
 from app.models.user import User, UserSettings, Notification
 
-# Create bcrypt instance
-bcrypt = Bcrypt()
+def hash_password(password: str) -> str:
+    """Hash password using SHA-256"""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def check_password(hashed: str, password: str) -> bool:
+    """Check if password matches hash"""
+    return hashed == hash_password(password)
 
 class AuthService:
     """Authentication service"""
@@ -30,7 +35,7 @@ class AuthService:
             User: Created user
         """
         # Hash password
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        hashed_password = hash_password(password)
         
         # Create user settings
         settings = UserSettings()
@@ -80,7 +85,7 @@ class AuthService:
             return None
         
         # Check password
-        if not bcrypt.check_password_hash(user.password, password):
+        if not check_password(user.password, password):
             return None
         
         # Update last login
@@ -132,11 +137,11 @@ class AuthService:
             return False
         
         # Check current password
-        if not bcrypt.check_password_hash(user.password, current_password):
+        if not check_password(user.password, current_password):
             return False
         
         # Hash new password
-        hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        hashed_password = hash_password(new_password)
         
         # Update password
         user.password = hashed_password
