@@ -14,9 +14,9 @@ from app.platform_connectors.facebook_connector import FacebookConnector
 from app.platform_connectors.instagram_connector import InstagramConnector
 from app.platform_connectors.tiktok_connector import TikTokConnector
 from app.platform_connectors.shopee_connector import ShopeeConnector
-from app.ai_modules.targeting import TargetingAI
-from app.ai_modules.creative import CreativeAI
-from app.ai_modules.optimization import OptimizationAI
+from app.ai_modules.audience_targeting import AudienceTargetingAI
+from app.ai_modules.creative_generation import CreativeGenerationAI
+from app.ai_modules.campaign_optimization import CampaignOptimizationAI
 
 class CampaignService:
     """Campaign service"""
@@ -27,9 +27,9 @@ class CampaignService:
         self.instagram_connector = InstagramConnector()
         self.tiktok_connector = TikTokConnector()
         self.shopee_connector = ShopeeConnector()
-        self.targeting_ai = TargetingAI()
-        self.creative_ai = CreativeAI()
-        self.optimization_ai = OptimizationAI()
+        self.targeting_ai = AudienceTargetingAI()
+        self.creative_ai = CreativeGenerationAI()
+        self.optimization_ai = CampaignOptimizationAI()
     
     def get_campaigns(self, user_id: str, page: int = 1, per_page: int = 10, 
                      platform: Optional[str] = None, status: Optional[str] = None) -> Dict:

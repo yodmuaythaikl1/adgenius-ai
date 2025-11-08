@@ -1,6 +1,7 @@
 """
 AdGenius AI Backend - Analytics Service
 """
+import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union
 
@@ -14,7 +15,7 @@ from app.platform_connectors.facebook_connector import FacebookConnector
 from app.platform_connectors.instagram_connector import InstagramConnector
 from app.platform_connectors.tiktok_connector import TikTokConnector
 from app.platform_connectors.shopee_connector import ShopeeConnector
-from app.ai_modules.optimization import OptimizationAI
+from app.ai_modules.campaign_optimization import CampaignOptimizationAI
 
 class AnalyticsService:
     """Analytics service"""
@@ -25,7 +26,7 @@ class AnalyticsService:
         self.instagram_connector = InstagramConnector()
         self.tiktok_connector = TikTokConnector()
         self.shopee_connector = ShopeeConnector()
-        self.optimization_ai = OptimizationAI()
+        self.optimization_ai = CampaignOptimizationAI()
     
     def get_dashboard_data(self, user_id: str, start_date: Optional[str] = None, 
                           end_date: Optional[str] = None, platform: Optional[str] = None) -> Dict:
