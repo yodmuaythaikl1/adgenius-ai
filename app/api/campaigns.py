@@ -4,7 +4,7 @@ AdGenius AI Backend - Campaigns API
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.campaign_service import CampaignService
+from app.services.campaign_service_simple import CampaignService
 from app.utils.validators import validate_required_fields
 
 # Create blueprint

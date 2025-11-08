@@ -4,7 +4,7 @@ AdGenius AI Backend - Analytics API
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.analytics_service import AnalyticsService
+from app.services.analytics_service_simple import AnalyticsService
 
 # Create blueprint
 analytics_bp = Blueprint('analytics', __name__, url_prefix='/analytics')
