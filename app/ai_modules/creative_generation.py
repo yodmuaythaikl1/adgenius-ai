@@ -27,8 +27,9 @@ class CreativeGenerationAI:
         """Initialize Creative Generation AI"""
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
         
-        # Initialize OpenAI client
-        openai.api_key = self.openai_api_key
+        # Initialize OpenAI client if available
+        if HAS_OPENAI and self.openai_api_key:
+            openai.api_key = self.openai_api_key
     
     def generate_ad_copy(self, product_name: str, product_description: str, target_audience: str, platform: str, tone: str = 'professional', length: str = 'medium') -> Dict:
         """

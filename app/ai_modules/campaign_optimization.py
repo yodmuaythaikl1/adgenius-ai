@@ -46,8 +46,9 @@ class CampaignOptimizationAI:
         self.tiktok_connector = TikTokConnector()
         self.shopee_connector = ShopeeConnector()
         
-        # Initialize OpenAI client
-        openai.api_key = self.openai_api_key
+        # Initialize OpenAI client if available
+        if HAS_OPENAI and self.openai_api_key:
+            openai.api_key = self.openai_api_key
     
     def analyze_campaign_performance(self, platform: str, campaign_id: str, access_token: str, account_id: str = None, start_date: datetime = None, end_date: datetime = None) -> Dict:
         """

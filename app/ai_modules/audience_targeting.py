@@ -47,8 +47,9 @@ class AudienceTargetingAI:
         self.tiktok_connector = TikTokConnector()
         self.shopee_connector = ShopeeConnector()
         
-        # Initialize OpenAI client
-        openai.api_key = self.openai_api_key
+        # Initialize OpenAI client if available
+        if HAS_OPENAI and self.openai_api_key:
+            openai.api_key = self.openai_api_key
     
     def analyze_product(self, product_description: str, product_category: str, target_audience: str = None) -> Dict:
         """
