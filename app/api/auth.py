@@ -23,45 +23,53 @@ def register():
     Returns:
         Response: JSON response
     """
-    data = request.get_json()
-    
-    # Validate required fields
-    validation = validate_required_fields(data, ['email', 'password', 'name'])
-    if not validation['valid']:
-        return jsonify({"error": validation['message']}), 400
-    
-    # Validate email
-    if not validate_email(data['email']):
-        return jsonify({"error": "Invalid email format"}), 400
-    
-    # Validate password
-    password_validation = validate_password(data['password'])
-    if not password_validation['valid']:
-        return jsonify({"error": password_validation['message']}), 400
-    
-    # Check if user already exists
-    if auth_service.get_user_by_email(data['email']):
-        return jsonify({"error": "Email already registered"}), 409
-    
-    # Create user
-    user = auth_service.create_user(
-        email=data['email'],
-        password=data['password'],
-        name=data['name']
-    )
-    
-    # Generate access token
-    access_token = create_access_token(identity=str(user.id))
-    
-    return jsonify({
-        "message": "User registered successfully",
-        "access_token": access_token,
-        "user": {
-            "id": str(user.id),
-            "email": user.email,
-            "name": user.name
-        }
-    }), 201
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        validation = validate_required_fields(data, ['email', 'password', 'name'])
+        if not validation['valid']:
+            return jsonify({"error": validation['message']}), 400
+        
+        # Validate email
+        if not validate_email(data['email']):
+            return jsonify({"error": "Invalid email format"}), 400
+        
+        # Validate password
+        password_validation = validate_password(data['password'])
+        if not password_validation['valid']:
+            return jsonify({"error": password_validation['message']}), 400
+        
+        # Check if user already exists
+        existing_user = auth_service.get_user_by_email(data['email'])
+        if existing_user:
+            return jsonify({"error": "Email already registered"}), 409
+        
+        # Create user
+        user = auth_service.create_user(
+            email=data['email'],
+            password=data['password'],
+            name=data['name']
+        )
+        
+        if not user:
+            return jsonify({"error": "Failed to create user"}), 500
+        
+        # Generate access token
+        access_token = create_access_token(identity=str(user.id))
+        
+        return jsonify({
+            "message": "User registered successfully",
+            "access_token": access_token,
+            "user": {
+                "id": str(user.id),
+                "email": user.email,
+                "name": user.name
+            }
+        }), 201
+    except Exception as e:
+        current_app.logger.error(f"Registration error: {str(e)}")
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -71,34 +79,38 @@ def login():
     Returns:
         Response: JSON response
     """
-    data = request.get_json()
-    
-    # Validate required fields
-    validation = validate_required_fields(data, ['email', 'password'])
-    if not validation['valid']:
-        return jsonify({"error": validation['message']}), 400
-    
-    # Authenticate user
-    user = auth_service.authenticate_user(
-        email=data['email'],
-        password=data['password']
-    )
-    
-    if not user:
-        return jsonify({"error": "Invalid email or password"}), 401
-    
-    # Generate access token
-    access_token = create_access_token(identity=str(user.id))
-    
-    return jsonify({
-        "message": "Login successful",
-        "access_token": access_token,
-        "user": {
-            "id": str(user.id),
-            "email": user.email,
-            "name": user.name
-        }
-    }), 200
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        validation = validate_required_fields(data, ['email', 'password'])
+        if not validation['valid']:
+            return jsonify({"error": validation['message']}), 400
+        
+        # Authenticate user
+        user = auth_service.authenticate_user(
+            email=data['email'],
+            password=data['password']
+        )
+        
+        if not user:
+            return jsonify({"error": "Invalid email or password"}), 401
+        
+        # Generate access token
+        access_token = create_access_token(identity=str(user.id))
+        
+        return jsonify({
+            "message": "Login successful",
+            "access_token": access_token,
+            "user": {
+                "id": str(user.id),
+                "email": user.email,
+                "name": user.name
+            }
+        }), 200
+    except Exception as e:
+        current_app.logger.error(f"Login error: {str(e)}")
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
 
 @auth_bp.route('/me', methods=['GET'])
 @jwt_required()
