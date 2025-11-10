@@ -5,6 +5,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from mongoengine import connect
 
 from app.config import config_by_name
 from app.utils.logger import setup_logger
@@ -26,6 +27,13 @@ def create_app(config_name="development"):
     
     # Load configuration
     app.config.from_object(config_by_name[config_name])
+    
+    # Setup MongoDB
+    try:
+        connect(host=app.config['MONGODB_URI'])
+        app.logger.info("MongoDB connected successfully")
+    except Exception as e:
+        app.logger.error(f"MongoDB connection error: {str(e)}")
     
     # Setup CORS
     CORS(app)
