@@ -30,7 +30,10 @@ def create_app(config_name="development"):
     
     # Setup MongoDB
     try:
-        connect(host=app.config['MONGODB_URI'])
+        connect(
+            host=app.config['MONGODB_URI'],
+            alias='default'
+        )
         app.logger.info("MongoDB connected successfully")
     except Exception as e:
         app.logger.error(f"MongoDB connection error: {str(e)}")
